@@ -1,6 +1,6 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>org.ai.cml</id>
+    <id>com.github.andrewi.cmlplugin</id>
     <name>Cml</name>
     <vendor>andrew--i</vendor>
     <version>0.0.2</version>

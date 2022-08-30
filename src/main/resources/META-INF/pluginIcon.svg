@@ -1,11 +1,13 @@
-<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M32.0845 7.94025V4H24.0203V7.9896H16.029V4H7.91553V7.94025H4V36H16.0044V32.0045C16.0058 30.9457 16.4274 29.9308 17.1766 29.1826C17.9258 28.4345 18.9412 28.0143 20 28.0143C21.0588 28.0143 22.0743 28.4345 22.8234 29.1826C23.5726 29.9308 23.9942 30.9457 23.9956 32.0045V36H36V7.94025H32.0845Z"
-          fill="url(#paint0_linear)"/>
-    <defs>
-        <linearGradient id="paint0_linear" x1="2.94192" y1="4.89955" x2="37.7772" y2="39.7345" gradientUnits="userSpaceOnUse">
-            <stop offset="0.15937" stop-color="#3BEA62"/>
-            <stop offset="0.5404" stop-color="#3C99CC"/>
-            <stop offset="0.93739" stop-color="#6B57FF"/>
-        </linearGradient>
-    </defs>
+<?xml version="1.0" standalone="yes"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="55">
+<path style="fill:#15181f; stroke:none;" d="M0 0L0 55L40 55L40 0L0 0z"/>
+<path style="fill:#f86699; stroke:none;" d="M13 17L6 21C11.007 21.8681 13.6172 25.0308 14 30L21 28L19 21C23.4175 22.9501 26.4352 24.8519 26 30C45.754 24.276 20.668 5.44083 13 17z"/>
+<path style="fill:#e5115a; stroke:none;" d="M12 16L13 17L12 16M14 16L15 17L14 16M7 20L6 28L14 30C13.8205 24.5868 11.605 22.5975 7 20M19 21C19.3815 26.0149 21.5017 27.9978 26 30C27.2076 24.5647 23.8855 22.4562 19 21z"/>
+<path style="fill:#15181f; stroke:none;" d="M7 27L8 28L7 27z"/>
+<path style="fill:#4e99cd; stroke:none;" d="M26 30L28 38C34.0217 36.1514 33.9956 32.7284 34 27L26 30z"/>
+<path style="fill:#1881b4; stroke:none;" d="M6 28C6.03557 38.0414 13.7718 41.2567 23 42C19.5496 33.9475 15.4844 28.9767 6 28z"/>
+<path style="fill:#4e99cd; stroke:none;" d="M14 30L14 31C18.7695 33.8602 20.272 35.7795 22 41L26 40L25 29L23 28L14 30z"/>
+<path style="fill:#1881b4; stroke:none;" d="M21 28L22 29L21 28M32 28L33 29L32 28M23 29L24 30L23 29M30 29L31 30L30 29M25 30L26 40L27 40L25 30M28 30L29 31L28 30M24 40L25 41L24 40z"/>
+<path style="fill:#4e99cd; stroke:none;" d="M21 41L22 42L21 41z"/>
+<path style="fill:#1881b4; stroke:none;" d="M4 42L5 43L4 42z"/>
 </svg>

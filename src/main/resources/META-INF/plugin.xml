@@ -7,12 +7,18 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.andrewi.cmlplugin.services.MyApplicationService"/>
-        <projectService serviceImplementation="com.github.andrewi.cmlplugin.services.MyProjectService"/>
+
+        <fileType
+                name="Cml File"
+                implementationClass="org.ai.CmlFileType"
+                fieldName="INSTANCE"
+                language="CML"
+                extensions="cml"/>
+
+        <lang.parserDefinition language="CML" implementationClass="org.ai.CmlParserDefinition"/>
+
+        <lang.syntaxHighlighterFactory language="CML" implementationClass="org.ai.CmlSyntaxHighlighterFactory"/>
     </extensions>
 
-    <applicationListeners>
-        <listener class="com.github.andrewi.cmlplugin.listeners.MyProjectManagerListener"
-                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
-    </applicationListeners>
+
 </idea-plugin>

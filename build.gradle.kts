@@ -18,6 +18,14 @@ plugins {
 group = properties("pluginGroup")
 version = properties("pluginVersion")
 
+sourceSets {
+    main {
+        java {
+            srcDirs("src/main/gen")
+        }
+    }
+}
+
 // Configure project's dependencies
 repositories {
     mavenCentral()

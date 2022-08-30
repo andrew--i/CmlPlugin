@@ -1,0 +1,61 @@
+{
+  parserClass="org.ai.CmlParser"
+  parserUtilClass="org.ai.CmlParserUtil"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="Cml"
+  psiImplClassSuffix="Impl"
+  psiPackage="org.ai.psi"
+  psiImplPackage="org.ai.psi.impl"
+
+  elementTypeHolderClass="org.ai.psi.CmlTypes"
+  elementTypeClass="org.ai.psi.CmlElementType"
+  tokenTypeClass="org.ai.psi.CmlTokenType"
+
+
+
+    tokens = [
+        space='regexp:\s+'
+        id="regexp:\w+"
+        string="regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\\"|\\\'|\\)*\")"
+        number="regexp:\d+"
+        line_comment="regexp://.*"
+        block_comment="regexp:/\*(.|\n)*\*/"
+
+        SEMICOLON=";"
+        LEFT_BRACE="{"
+        RIGHT_BRACE="}"
+        LEFT_BRACKET="["
+        RIGHT_BRACKET="]"
+        LEFT_PAREN="("
+        RIGHT_PAREN=")"
+        EQ = "="
+
+        BOUNDED_CONTEXT_TOKEN="BoundedContext"
+        DOMAIN_VISTION_TOKEN="domainVisionStatement"
+        TECHNOLOGY_TOKEN="implementationTechnology"
+        CONSUMER_TOKEN="Consumer"
+        SERVICE_TOKEN="Service"
+        RESOURCE_TOKEN="Resource"
+        HINT_TOKEN="hint"
+        AGGREFATE_TOKEN="Aggregate"
+        IMPORT_TOKEN="import"
+    ]
+}
+CMLContent ::= IMPORT* BOUNDED_CONTEXT
+IMPORT ::= IMPORT_TOKEN string
+BOUNDED_CONTEXT ::= COMMENT? BOUNDED_CONTEXT_TOKEN id  LEFT_BRACE DOMAIN_VISION TECHNOLOGY AGGREGATE* RIGHT_BRACE
+COMMENT ::= [block_comment|line_comment]
+DOMAIN_VISION ::= DOMAIN_VISTION_TOKEN string
+TECHNOLOGY ::= TECHNOLOGY_TOKEN string
+AGGREGATE ::= DOC? 'Aggregate' id LEFT_BRACE SERVICE* CONSUMER* RESOURCE* RIGHT_BRACE
+DOC ::= string
+SERVICE ::= COMMENT? DOC? SERVICE_TOKEN id LEFT_BRACE HINT? RIGHT_BRACE
+CONSUMER ::= COMMENT? DOC? CONSUMER_TOKEN id LEFT_BRACE HINT? SUBSCRIBE RIGHT_BRACE
+RESOURCE ::= COMMENT? DOC? RESOURCE_TOKEN id LEFT_BRACE HINT? RIGHT_BRACE
+HINT ::= HINT_TOKEN EQ string
+
+SUBSCRIBE ::= COMMENT? 'subscribe to' id 'topicName' EQ d
+
+

@@ -16,12 +16,18 @@
 
 
     tokens = [
+
         space='regexp:\s+'
         id="regexp:\w+"
         string="regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\\"|\\\'|\\)*\")"
         number="regexp:\d+"
-        line_comment="regexp://.*"
+        caption_token='@caption'
+        owner_token='@owner'
         block_comment="regexp:/\*(.|\n)*\*/"
+        meta_start='//'
+        via_token="@via:"
+        rest_token="REST"
+        queue_token="queue"
 
         SEMICOLON=";"
         LEFT_BRACE="{"
@@ -41,21 +47,34 @@
         HINT_TOKEN="hint"
         AGGREFATE_TOKEN="Aggregate"
         IMPORT_TOKEN="import"
+        COMMAND_EVENT_TOKEN="CommandEvent"
+        DOMAIN_EVENT_TOKEN="DomainEvent"
+
+        APPLICATION_TOKEN='Application'
     ]
 }
-CMLContent ::= IMPORT* BOUNDED_CONTEXT
+CMLContent ::= COMMENT* IMPORT* COMMENT* CAPTION? OWNER? BOUNDED_CONTEXT
 IMPORT ::= IMPORT_TOKEN string
-BOUNDED_CONTEXT ::= COMMENT? BOUNDED_CONTEXT_TOKEN id  LEFT_BRACE DOMAIN_VISION TECHNOLOGY AGGREGATE* RIGHT_BRACE
-COMMENT ::= [block_comment|line_comment]
-DOMAIN_VISION ::= DOMAIN_VISTION_TOKEN string
-TECHNOLOGY ::= TECHNOLOGY_TOKEN string
-AGGREGATE ::= DOC? 'Aggregate' id LEFT_BRACE SERVICE* CONSUMER* RESOURCE* RIGHT_BRACE
+CAPTION ::=  meta_start space? caption_token space? string
+OWNER ::= meta_start space? owner_token space? string
+BOUNDED_CONTEXT ::= COMMENT* 'BoundedContext' id  LEFT_BRACE DOMAIN_VISION? TECHNOLOGY? AGGREGATE* APPLICATION? RIGHT_BRACE
+COMMENT ::= block_comment
+DOMAIN_VISION ::= DOMAIN_VISTION_TOKEN [space|EQ] string
+TECHNOLOGY ::= TECHNOLOGY_TOKEN [space|EQ] string
+AGGREGATE ::= DOC? 'Aggregate' id LEFT_BRACE SERVICE* CONSUMER* RESOURCE* COMMAND_EVENT* DOMAIN_EVENT* RIGHT_BRACE
 DOC ::= string
 SERVICE ::= COMMENT? DOC? SERVICE_TOKEN id LEFT_BRACE HINT? RIGHT_BRACE
 CONSUMER ::= COMMENT? DOC? CONSUMER_TOKEN id LEFT_BRACE HINT? SUBSCRIBE RIGHT_BRACE
 RESOURCE ::= COMMENT? DOC? RESOURCE_TOKEN id LEFT_BRACE HINT? RIGHT_BRACE
 HINT ::= HINT_TOKEN EQ string
+COMMAND_EVENT ::= DOC? PROTOCOL? 'CommandEvent' id
+DOMAIN_EVENT ::= DOC? PROTOCOL? 'DomainEvent' id
+PROTOCOL ::= meta_start space? via_token [rest_token|queue_token]
 
 SUBSCRIBE ::= COMMENT? 'subscribe to' id 'topicName' EQ d
 
-
+APPLICATION ::= 'Application' id LEFT_BRACE FLOW* RIGHT_BRACE
+FLOW ::= 'Flow' id LEFT_BRACE FLOW_ITEM* RIGHT_BRACE
+FLOW_ITEM ::= [COMMAND_FLOW_ITEM|EVENT_FLOW_ITEM]
+COMMAND_FLOW_ITEM ::= 'command' id 'emits event' id
+EVENT_FLOW_ITEM ::= 'event' id 'triggers command' id

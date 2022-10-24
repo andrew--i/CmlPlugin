@@ -21,13 +21,21 @@
         id="regexp:\w+"
         string="regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\\"|\\\'|\\)*\")"
         number="regexp:\d+"
+        block_comment="regexp:/\*(.|\n)*\*/"
+        url="regexp:https?.*"
+
+
         caption_token='@caption'
         owner_token='@owner'
-        block_comment="regexp:/\*(.|\n)*\*/"
+        wiki_token='@wiki'
+        ka_token='@KA'
+        sa_token='@SA'
+        dev_token='@DEV'
+        test_token='@TEST'
+        complexity_token='@complexity'
         meta_start='//'
-        via_token="@via:"
-        rest_token="REST"
-        queue_token="queue"
+        via_rest_token="@via:REST"
+        via_queue_token="@via:queue:"
 
         SEMICOLON=";"
         LEFT_BRACE="{"
@@ -39,8 +47,15 @@
         EQ = "="
 
         BOUNDED_CONTEXT_TOKEN="BoundedContext"
+        IMPLEMENTS_TOKEN="implements"
+        CONTEXT_MAP_TOKEN="ContextMap"
         DOMAIN_VISTION_TOKEN="domainVisionStatement"
         TECHNOLOGY_TOKEN="implementationTechnology"
+        MAP_TYPE_TOKEN="type"
+        MAP_STATE_TOKEN="state"
+        CONTAINS_TOKEN="contains"
+        CONTEXT_RELATION_TOKEN="->"
+
         CONSUMER_TOKEN="Consumer"
         SERVICE_TOKEN="Service"
         RESOURCE_TOKEN="Resource"
@@ -49,19 +64,36 @@
         IMPORT_TOKEN="import"
         COMMAND_EVENT_TOKEN="CommandEvent"
         DOMAIN_EVENT_TOKEN="DomainEvent"
+        FLOW_TOKEN="Flow"
+        FLOW_COMMAND_TOKEN="command"
+        FLOW_EVENT_TOKEN="event"
+        FLOW_EVENT_EMITS_TOKEN="emits event"
+        FLOW_TRIGGER_COMMAND_TOKEN="triggers command"
 
         APPLICATION_TOKEN='Application'
     ]
 }
-CMLContent ::= COMMENT* IMPORT* COMMENT* CAPTION? OWNER? BOUNDED_CONTEXT
+CMLContent ::= COMMENT* IMPORT* COMMENT* CAPTION? OWNER? WIKI? KA? SA? DEV? TEST? BOUNDED_CONTEXT? CONTEXT_MAP
 IMPORT ::= IMPORT_TOKEN string
 CAPTION ::=  meta_start space? caption_token space? string
 OWNER ::= meta_start space? owner_token space? string
-BOUNDED_CONTEXT ::= COMMENT* 'BoundedContext' id  LEFT_BRACE DOMAIN_VISION? TECHNOLOGY? AGGREGATE* APPLICATION? RIGHT_BRACE
+WIKI ::= meta_start space? wiki_token space? url?
+KA ::= meta_start space? ka_token space? url?
+SA ::= meta_start space? sa_token space? url?
+DEV ::= meta_start space? dev_token space? url?
+TEST ::= meta_start space? test_token space? url?
+BOUNDED_CONTEXT ::= COMMENT* 'BoundedContext' id IMPLEMENTS?  LEFT_BRACE DOMAIN_VISION? TECHNOLOGY? AGGREGATE* APPLICATION? RIGHT_BRACE
+IMPLEMENTS ::= 'implements' id
+CONTEXT_MAP ::= COMMENT* 'ContextMap' id LEFT_BRACE MAP_TYPE? MAP_STATE? CONTAINS* CONTEXT_RELATION* RIGHT_BRACE
 COMMENT ::= block_comment
 DOMAIN_VISION ::= DOMAIN_VISTION_TOKEN [space|EQ] string
+MAP_TYPE ::= MAP_TYPE_TOKEN [space|EQ] ['SYSTEM_LANDSCAPE']
+MAP_STATE ::= MAP_STATE_TOKEN [space|EQ] ['TO_BE']
+CONTAINS ::= CONTAINS_TOKEN id
+CONTEXT_RELATION ::= COMMENT id CONTEXT_RELATION_TOKEN is LEFT_BRACE TECHNOLOGY_TOKEN RIGHT_BRACE
 TECHNOLOGY ::= TECHNOLOGY_TOKEN [space|EQ] string
-AGGREGATE ::= DOC? 'Aggregate' id LEFT_BRACE SERVICE* CONSUMER* RESOURCE* COMMAND_EVENT* DOMAIN_EVENT* RIGHT_BRACE
+AGGREGATE ::= DOC? COMPLEXITY? 'Aggregate' id LEFT_BRACE SERVICE* CONSUMER* RESOURCE* COMMAND_EVENT* DOMAIN_EVENT* RIGHT_BRACE
+COMPLEXITY ::= meta_start space? complexity_token space? id
 DOC ::= string
 SERVICE ::= COMMENT? DOC? SERVICE_TOKEN id LEFT_BRACE HINT? RIGHT_BRACE
 CONSUMER ::= COMMENT? DOC? CONSUMER_TOKEN id LEFT_BRACE HINT? SUBSCRIBE RIGHT_BRACE
@@ -69,12 +101,12 @@ RESOURCE ::= COMMENT? DOC? RESOURCE_TOKEN id LEFT_BRACE HINT? RIGHT_BRACE
 HINT ::= HINT_TOKEN EQ string
 COMMAND_EVENT ::= DOC? PROTOCOL? 'CommandEvent' id
 DOMAIN_EVENT ::= DOC? PROTOCOL? 'DomainEvent' id
-PROTOCOL ::= meta_start space? via_token [rest_token|queue_token]
+PROTOCOL ::= meta_start space? [via_queue_token id|via_rest_token]
 
 SUBSCRIBE ::= COMMENT? 'subscribe to' id 'topicName' EQ d
 
 APPLICATION ::= 'Application' id LEFT_BRACE FLOW* RIGHT_BRACE
 FLOW ::= 'Flow' id LEFT_BRACE FLOW_ITEM* RIGHT_BRACE
 FLOW_ITEM ::= [COMMAND_FLOW_ITEM|EVENT_FLOW_ITEM]
-COMMAND_FLOW_ITEM ::= 'command' id 'emits event' id
-EVENT_FLOW_ITEM ::= 'event' id 'triggers command' id
+COMMAND_FLOW_ITEM ::= FLOW_COMMAND_TOKEN id FLOW_EVENT_EMITS_TOKEN id
+EVENT_FLOW_ITEM ::= FLOW_EVENT_TOKEN id FLOW_TRIGGER_COMMAND_TOKEN id

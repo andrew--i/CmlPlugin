@@ -3,7 +3,7 @@
     <id>com.github.andrewi.cmlplugin</id>
     <name>Cml</name>
     <vendor>andrew--i</vendor>
-    <version>0.0.4</version>
+    <version>0.0.5</version>
 
     <depends>com.intellij.modules.platform</depends>
 

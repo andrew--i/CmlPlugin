@@ -60,6 +60,11 @@ public class CmlSyntaxHighlighter implements SyntaxHighlighter {
     }
 
     if (tokenType.equals(CmlTypes.BOUNDED_CONTEXT_TOKEN) ||
+        tokenType.equals(CmlTypes.CONTEXT_MAP_TOKEN) ||
+        tokenType.equals(CmlTypes.CONTAINS_TOKEN) ||
+        tokenType.equals(CmlTypes.MAP_TYPE_TOKEN) ||
+        tokenType.equals(CmlTypes.MAP_STATE_TOKEN) ||
+        tokenType.equals(CmlTypes.CONTEXT_RELATION_TOKEN) ||
         tokenType.equals(CmlTypes.CONSUMER_TOKEN) ||
         tokenType.equals(CmlTypes.SERVICE_TOKEN) ||
         tokenType.equals(CmlTypes.AGGREFATE_TOKEN) ||
@@ -72,13 +77,25 @@ public class CmlSyntaxHighlighter implements SyntaxHighlighter {
         tokenType.equals(CmlTypes.APPLICATION_TOKEN) ||
         tokenType.equals(CmlTypes.CAPTION_TOKEN) ||
         tokenType.equals(CmlTypes.OWNER_TOKEN) ||
-        tokenType.equals(CmlTypes.VIA_TOKEN)
+        tokenType.equals(CmlTypes.FLOW_TOKEN) ||
+        tokenType.equals(CmlTypes.FLOW_COMMAND_TOKEN) ||
+        tokenType.equals(CmlTypes.FLOW_EVENT_TOKEN) ||
+        tokenType.equals(CmlTypes.FLOW_EVENT_EMITS_TOKEN) ||
+        tokenType.equals(CmlTypes.FLOW_TRIGGER_COMMAND_TOKEN) ||
+        tokenType.equals(CmlTypes.WIKI_TOKEN) ||
+        tokenType.equals(CmlTypes.KA_TOKEN) ||
+        tokenType.equals(CmlTypes.SA_TOKEN) ||
+        tokenType.equals(CmlTypes.DEV_TOKEN) ||
+        tokenType.equals(CmlTypes.TEST_TOKEN) ||
+        tokenType.equals(CmlTypes.IMPLEMENTS_TOKEN) ||
+        tokenType.equals(CmlTypes.COMPLEXITY_TOKEN)
+
     ) {
       return KEYWORD_KEYS;
     }
 
-    if (tokenType.equals(CmlTypes.REST_TOKEN) ||
-        tokenType.equals(CmlTypes.QUEUE_TOKEN)) {
+    if (tokenType.equals(CmlTypes.VIA_REST_TOKEN) ||
+        tokenType.equals(CmlTypes.VIA_QUEUE_TOKEN)) {
       return PROTOCOL_KEYS;
     }
 
